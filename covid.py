@@ -55,8 +55,9 @@ def upload_data_to_big_query():
     job_config.source_format = bigquery.SourceFormat.CSV
     job_config.skip_leading_rows = 1
     job_config.autodetect = True
+    date = datetime.datetime.today().strftime('%Y-%m-%d')
 
-    with open('covid_data_2020-06-01.csv', "rb") as source_file:
+    with open("covid_data_{}.csv".format(date), "rb") as source_file:
         job = client.load_table_from_file(source_file, table_ref, job_config=job_config)
 
     job.result()  # Waits for table load to complete.
